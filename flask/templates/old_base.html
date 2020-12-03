@@ -103,13 +103,11 @@
             {% for this_club in info.is_array %}
                 <div class="card {% if this_club.is_affinity_group %}affinity-group{% else %}club{% endif %}">
                 <img class="card-img-top" src="{{ this_club.cover_photo }}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong style="color: #ab192d;">{{ this_club.title }}</strong></h5>
-                        <p class="card-text">{{ this_club.description }}</p>
-                        <p class="card-text">{{ this_club.name }}</p>
-                        <p class="card-text">Sponsor{% if this_club.sponsor_info[0].is_not_last %}s{% endif %}: {% for sponsor in this_club.sponsor_info %}{% if sponsor.is_not_first %}, {% else %}{% if sponsor.is_not_last %}{% if sponsor.is_not_first %} and {% endif %}{% endif %}{% endif %}<a href="{{ sponsor.link }}">{{ sponsor.name }}</a>{% if sponsor.is_not_last %}{% endif %}{% endfor %}</p>
-                        {% if this_club.email %}<a href="mailto:{{ this_club.email }}"><i class="fa fa-envelope"></i> {{ this_club.email }}</a>{% endif %}
-                    </div>
+                <div class="card-body">
+                    <h5 class="card-title"><a href="/projects/{{ this_club.id }}"><strong style="color: #ab192d;">{{ this_club.title }} ({{ this_club.name }} {{ this_club.graduating_class }})</strong></a></h5>
+                    <p class="card-text">Sponsor{% if this_club.sponsor_info[0].is_not_last %}s{% endif %}: {% for sponsor in this_club.sponsor_info %}{% if sponsor.is_not_first %}, {% else %}{% if sponsor.is_not_last %}{% if sponsor.is_not_first %} and {% endif %}{% endif %}{% endif %}<a style="color: #ab192d;" href="{{ sponsor.link }}">{{ sponsor.name }}</a>{% if sponsor.is_not_last %}{% endif %}{% endfor %}</p>
+                    <p class="card-text">{{ this_club.description }}</p>
+                </div>
                 </div>
             {% endfor %}
             <!-- <div class="card p-3">

@@ -23,12 +23,12 @@ def get_info():
     info["is_dict"] = {}
     info["description"] = "get it from a different sheet perhaps?"
     info["is_names"] = []
+    info["category_is_dict"] = {}
     all_info = sheet.get_all_values()
     all_info.pop(0)
     for item in all_info:			
-        this_item= {"timestamp":item[0], "email":item[1], "name":item[2],"graduation_year":item[3],"sponsor":item[4],"department":item[5],"title":item[6],"description":item[7],"link":item[8],"cover_photo":item[9],"profile_photo":item[10]}
+        this_item= {"timestamp":item[0], "email":item[1], "name":item[2],"graduation_year":item[3],"sponsor":item[4],"department":item[5],"title":item[6],"description":item[7],"link":item[8],"cover_photo":item[9],"profile_photo":item[10],"zoom_link":item[11],"proj_type":item[12],"id":item[13]}
         this_item["index"] = all_info.index(item)
-        this_item["id"] = this_item["title"].lower().replace(" ","-")
         if "," in this_item["name"]:
             this_item["names"] = this_item["name"].split(", ")
         this_item["name_info"] = []
@@ -65,7 +65,11 @@ def get_info():
                 sponsor_dict["is_not_first"] = False
             this_item["sponsor_info"].append(sponsor_dict)
         info["is_array"].append(this_item)
-        info["is_dict"][this_item["title"]] = this_item
+        info["is_dict"][this_item["id"]] = this_item
+        this_item["department_id"] = this_item["department"].lower().replace(" ","-")
+        if this_item["department_id"] not in info["category_is_dict"]:
+            info["category_is_dict"][this_item["department_id"]] = []
+        info["category_is_dict"][this_item["department_id"]].append(this_item)
         # if len(item)>=11:
         #     if item[10] == "Yes":
         #         this_item["is_affinity_group"] = True
@@ -73,17 +77,37 @@ def get_info():
             this_item["cover_photo"] = "https://drive.google.com/uc?export=view&id="+this_item["cover_photo"].split("?id=")[1]
         if "?id=" in this_item["profile_photo"]:
             this_item["profile_photo"] = "https://drive.google.com/uc?export=view&id="+this_item["profile_photo"].split("?id=")[1]
+        if "presentation" in this_item["link"]:
+            this_item["embed_link"] = '<iframe src="https://docs.google.com/presentation/d/e/'+this_item["link"].split("/presentation/d/")[1].split("/")[0]+'/embed?start=false&loop=true&delayms=5000" frameborder="0" width="1440" height="839" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>'
         if this_item["cover_photo"] == "":
             this_item["cover_photo"] = "https://via.placeholder.com/150?text="+this_item["title"]+" ("+this_item["name"]+")"
     return info 
 
-@app.route('/')
+def get_by_id(proj_id):
+    info = get_info()
+    return info["is_dict"][proj_id]
+
+@app.route('/old')
 def generate_independent_study_symposium():
     info = get_info()
     return render_template('old_base.html', info = info)
 
+@app.route('/projects/<proj_id>')
+def get_independent_study(proj_id):
+    info = get_info()
+    project = info["is_dict"][proj_id]
+    return render_template('project.html', info = info, project = project)
 
-@app.route('/index')
+@app.route('/categories/<cat_id>')
+def get_independent_studies_by_category(cat_id):
+    info = get_info()
+    category = info["category_is_dict"][cat_id]
+    info["is_dict"] = category
+    info["is_array"] = category
+    return render_template('index.html', info = info, category = category)
+
+
+@app.route('/')
 def generate_independent_study_symposium2():
     info = get_info()
     return render_template('index.html', info = info)
