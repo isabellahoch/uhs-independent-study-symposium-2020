@@ -32,6 +32,7 @@ def generate_independent_study_symposium():
         if "," in this_item["name"]:
             this_item["names"] = this_item["name"].split(", ")
         this_item["name_info"] = []
+        print(this_item["title"])
         info["is_names"].append(this_item["title"].lower())
         # for leader in this_item["leader_array"]:
         #     leader_dict = {"name": leader,"link":"https://www.sfuhs.org/student/community-directory?utf8=%E2%9C%93&const_search_role_ids=6%2C2%2C1&const_search_first_name="+leader.split(" ")[0]+"&const_search_last_name="+leader.split(" ")[1]}
@@ -47,7 +48,10 @@ def generate_independent_study_symposium():
         this_item["sponsor_array"] = [this_item["sponsor"]]
         this_item["sponsor_info"] = []
         for sponsor in this_item["sponsor_array"]:
-            sponsor_dict = {"name": sponsor,"link":"https://www.sfuhs.org/student/community-directory?utf8=%E2%9C%93&const_search_role_ids=6%2C2%2C1&const_search_first_name="+sponsor.split(" ")[0]+"&const_search_last_name="+sponsor.split(" ")[1]}
+            if " " in sponsor:
+                sponsor_dict = {"name": sponsor,"link":"https://www.sfuhs.org/student/community-directory?utf8=%E2%9C%93&const_search_role_ids=6%2C2%2C1&const_search_first_name="+sponsor.split(" ")[0]+"&const_search_last_name="+sponsor.split(" ")[1]}
+            else:
+                sponsor_dict = {"name": sponsor,"link":"https://www.sfuhs.org/student/community-directory?utf8=%E2%9C%93&const_search_role_ids=6%2C2%2C1&const_search_first_name="+sponsor}
             if "and " in sponsor:
                 sponsor_dict["name"] = sponsor[4:]
             if this_item["sponsor_array"].index(sponsor) == len(this_item["sponsor_array"])-1:
@@ -69,6 +73,8 @@ def generate_independent_study_symposium():
             this_item["cover_photo"] = "https://drive.google.com/uc?export=view&id="+this_item["cover_photo"].split("?id=")[1]
         if "?id=" in this_item["profile_photo"]:
             this_item["profile_photo"] = "https://drive.google.com/uc?export=view&id="+this_item["profile_photo"].split("?id=")[1]
+        if this_item["cover_photo"] == "":
+            this_item["cover_photo"] = "https://via.placeholder.com/150?text="+this_item["title"]+" ("+this_item["name"]+")"
     return render_template('base.html', info = info)
 
 
