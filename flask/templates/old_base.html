@@ -108,7 +108,6 @@
                         <p class="card-text">{{ this_club.description }}</p>
                         <p class="card-text">{{ this_club.name }}</p>
                         <p class="card-text">Sponsor{% if this_club.sponsor_info[0].is_not_last %}s{% endif %}: {% for sponsor in this_club.sponsor_info %}{% if sponsor.is_not_first %}, {% else %}{% if sponsor.is_not_last %}{% if sponsor.is_not_first %} and {% endif %}{% endif %}{% endif %}<a href="{{ sponsor.link }}">{{ sponsor.name }}</a>{% if sponsor.is_not_last %}{% endif %}{% endfor %}</p>
-                        <p class="card-text">Meeting Time: {{ this_club.meeting_time }}</p>
                         {% if this_club.email %}<a href="mailto:{{ this_club.email }}"><i class="fa fa-envelope"></i> {{ this_club.email }}</a>{% endif %}
                     </div>
                 </div>
