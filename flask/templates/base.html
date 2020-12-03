@@ -1,336 +1,85 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+
+<!DOCTYPE html>
 <html>
-<head>
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-   <style>
-    a {
-        color:#ab192d !important;
-    }
-    .nav > li {
-        margin-right: 10px;
-    }
-    .container {
-        font-family: 'Open Sans', sans-serif !important;
-    }
-    .btn:focus {
-        box-shadow: none !important;
-    }
-    .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
-        border-color: #e9ecef #e9ecef #dee2e6;
-        border-bottom-style: hidden;
-    }
-
-    .nav-tabs .nav-link {
-        border: 1px solid transparent;
-        border-top-left-radius: .25rem;
-        border-top-right-radius: .25rem;
-        color: #fff;
-    }
-    .nav-link .active {
-        color:#000 !important
-    }
-   </style>
-   <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300;400;700&display=swap&family=Luckiest+Guy&display=swap&family=Bebas+Neue&family=Roboto:wght@300;400" rel="stylesheet">
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block description %}{% endblock %}">
+    <meta name="keywords" content="uhs, university high school, independent study symposium,{% block keywords %}{% endblock %}">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Comfortaa|Lobster+Two|Luckiest+Guy|Poiret+One|Sigmar+One" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    {% block head %}{% endblock %}
 </head>
-<body class="bg-light" style="background: linear-gradient(90deg, rgba(171,25,45,1) 44%, rgba(231,1,1,1) 100%) !important;">
-    <div class="container">
-        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">UHS VIRTUAL CLUB FAIR</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#" class="show-all">Browse <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Search by Type
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#affinity-groups" id="show-affinity-groups">Affinity Group</a>
-                    <a class="dropdown-item" href="#clubs" id="show-clubs">Club</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/" class="show-all">Browse All</a>
-                  </div>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-              </ul>
-            </div>
-          </nav> -->
-          <div class="row text-center align-items-center justify-content-center" style="padding:25px">
-            <!-- <img style="width:80%" src="https://drive.google.com/uc?export=view&id=1g_Ef0TgigUoPqqKm9V6O421fndpy9pxU"> -->
-            <h1>FALL 2020 INDEPENDENT STUDY SYMPOSIUM</h1>
-          </div>
-        <div class="row" style="padding:25px">
-            <div class="col-lg-8">
-                <ul class="nav nav-tabs" style="font-family: 'Bebas Neue', cursive; color: #fff">
-                    <li class="nav-item">
-                    <button class="btn nav-link show-all active" id="show-all" style="font-size:1.5rem">Browse All</button>
-                    </li>
-                    <!-- <li class="nav-item"><button class="btn nav-link" id="show-affinity-groups" style="font-size:1.5rem">Affinity Groups</button></li>
-                    <li class="nav-item"><button class="btn nav-link" id="show-clubs" style="font-size:1.5rem">Clubs</button></li> -->
-                    <li class="nav-item"><button class="btn nav-link" id="show-carousel" style="font-size:1.5rem">Slideshow</button></li>
-                    <li class="nav-item"><button class="btn nav-link" style="display:none" id="club-detail-view"></button></li>
-                </ul>
-            </div>
-            <div class="col-lg-4" id="search-div">
-                <form class="form-inline my-2 my-lg-0">
-                    <!-- <input class="form-control mr-sm-2" id="search" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button> -->
-                    <div class="form-group has-search" style="width:100%">
-                        <span class="fa fa-search form-control-feedback" style="position: absolute;
-                        z-index: 2;
-                        display: block;
-                        width: 2.375rem;
-                        height: 2.375rem;
-                        line-height: 2.375rem;
-                        text-align: center;
-                        pointer-events: none;
-                        color: #aaa;"></span>
-                        <input type="text" class="form-control" style="padding-left: 2.375rem; width:100%; height:50px" id="search" placeholder="Search">
-                      </div>
-                </form>
-            </div>
-        </div>
-        <div class="card-columns" id="cards" style="font-family: 'Roboto', sans-serif;">
-            {% for this_club in info.is_array %}
-                <div class="card {% if this_club.is_affinity_group %}affinity-group{% else %}club{% endif %}">
-                <img class="card-img-top" src="{{ this_club.cover_photo }}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong style="color: #ab192d;">{{ this_club.title }}</strong></h5>
-                        <p class="card-text">{{ this_club.description }}</p>
-                        <p class="card-text">{{ this_club.name }}</p>
-                        <p class="card-text">Sponsor{% if this_club.sponsor_info[0].is_not_last %}s{% endif %}: {% for sponsor in this_club.sponsor_info %}{% if sponsor.is_not_first %}, {% else %}{% if sponsor.is_not_last %}{% if sponsor.is_not_first %} and {% endif %}{% endif %}{% endif %}<a href="{{ sponsor.link }}">{{ sponsor.name }}</a>{% if sponsor.is_not_last %}{% endif %}{% endfor %}</p>
-                        <p class="card-text">Meeting Time: {{ this_club.meeting_time }}</p>
-                        {% if this_club.email %}<a href="mailto:{{ this_club.email }}"><i class="fa fa-envelope"></i> {{ this_club.email }}</a>{% endif %}
-                    </div>
+
+<body>
+
+
+  <div class="container-fluid" style="background-color#efefef">
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand">Navbar</a>
+        <li class="nav-item {% block homeisactive %}{% endblock %}">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        {% for category in info.categories %}
+        <li class="nav-item ">
+            <a class="nav-link" id="category" href="/{{ category }}">{{ category }}</a>
+        </li>
+        {% endfor %}
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
+    <div class="container-fluid" id="main">
+        {% block content %}{% endblock %}
+        <footer class="page-footer deep-purple center-on-small-only pt-0">
+            <!-- <hr class="rgba-white-light">
+            <div class="row d-flex text-center justify-content-center mb-md-0 mb-4" style="padding-top: 25px; height: 75px;">
+                <div class="col">
+                <div class="social-footer mb-5 flex-center social-links" id="social-media-links" style="font-size:25px">
+                    <a class="icons-sm fb-ic link" href="https://www.facebook.com/pages/UHS-Baking-Club/725355447810830"><i class="fab fa-facebook-f""> </i></a> -->
+    
+                    <!-- <a class="icons-sm gplus-ic link" href="https://plus.google.com/106958539680238184412"><i class="fab fa-google-plus"> </i></a>
+        
+                    <a class="icons-sm tmblr-ic link" href="https://uhsbakingclub.tumblr.com/"><i class="fab fa-tumblr"> </i></a>
+                    <a class="icons-sm gh-ic link" href="https://www.github.com/isabellahoch/"><i class="fab fa-github"> </i></a>
+                    <a class="icons-sm li-ic link" href="https://www.linkedin.com/in/isabella-hochschild-969ba7127/"><i class="fab fa-linkedin-in"> </i></a>
+                    <a class="icons-sm ins-ic link" href="https://www.instagram.com/isabellahochschild/"><i class="fab fa-instagram"> </i></a>
+                    <a class="icons-sm tw-ic link" href="https://twitter.com/isabellahoch"><i class="fab fa-twitter"> </i></a>
                 </div>
-            {% endfor %}
-            <!-- <div class="card p-3">
-            <blockquote class="blockquote mb-0 card-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                <footer class="blockquote-footer">
-                <small class="text-muted">
-                    Someone famous in <cite title="Source Title">Source Title</cite>
-                </small>
-                </footer>
-            </blockquote>
-            </div>
-            <div class="card">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
-            </div>
-            <div class="card bg-primary text-white text-center p-3">
-            <blockquote class="blockquote mb-0">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.</p>
-                <footer class="blockquote-footer">
-                <small>
-                    Someone famous in <cite title="Source Title">Source Title</cite>
-                </small>
-                </footer>
-            </blockquote>
-            </div>
-            <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
-            </div>
-            <div class="card">
-            <img class="card-img" src="..." alt="Card image">
-            </div>
-            <div class="card p-3 text-right">
-            <blockquote class="blockquote mb-0">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                <footer class="blockquote-footer">
-                <small class="text-muted">
-                    Someone famous in <cite title="Source Title">Source Title</cite>
-                </small>
-                </footer>
-            </blockquote>
-            </div>
-            <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
+                </div>
             </div> -->
-        </div>
-        <div id="carousel" class="carousel slide" data-ride="carousel" data-interval=2000 style="display:none">
-            <ol class="carousel-indicators">
-              <li data-target="#carousel" data-slide-to="0" class="active"></li>
-              {% for this_club in info.is_array %}
-              {% if this_club.index != 0 %}
-              <li data-target="#carousel" data-slide-to="{{ this_club.index }}"></li>
-              {% endif %}
-              {% endfor %}
-            </ol>
-            <div class="carousel-inner">
-              {% for this_club in info.is_array %}
-              {% if this_club.cover_photo %}
-              <div class="carousel-item">
-                <img class="d-block w-100" src="{{ this_club.cover_photo }}" alt="{{ this_club.title }}">
-                <div class="carousel-caption d-none d-md-block" style="background-color:#ab192d; opacity:0.75">
-                    <h5><button class="btn specific-club-link" id="{{ this_club.id }}-link" style="background-color:#fff;color:#000 !important">{{ this_club.title }}</button></h5>
-                    <p>{{ this_club.description }}</p>
-                  </div>
-              </div>
-              {% endif %}
-              {% endfor %}
+            <hr class="clearfix rgba-white-light">
+            <div class="row d-flex text-center justify-content-center mb-md-0 mb-4">
+                <div class="col-md-8 col-12 mt-5">
+                <p style="line-height: 1.7rem">&copy; <span id="copyright_year">2020</span>: <a class="link" href="/"> VPs of Technology </a></p>
+                </div>
             </div>
-            <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-          {% for this_club in info.is_array %}
-          <div class="row text-center align-items-center justify-content-center specific-club" id="{{ this_club.id }}" style="background-color:#fff; padding:20px; display:none">
-            <h1>{{ this_club.name }}</h1>
-            {% if this_club.cover_photo %}<img class="card-img-top" style="padding:25px" src="{{ this_club.cover_photo }}">{% endif %}
-            <br><p>{{ this_club.description }}</p><br>
-            <ul style="list-style:none">
-                <li>{{ this_club.name }}</li>
-                <br><li>Sponsor{% if this_club.sponsor_info[0].is_not_last %}s{% endif %}: {% for sponsor in this_club.sponsor_info %}{% if sponsor.is_not_last %}{% if sponsor.is_not_first %}, {% endif %}{% else %}{% if sponsor.is_not_last %} and {% endif %}{% endif %}<a href="{{ sponsor.link }}">{{ sponsor.name }}</a>{% if sponsor.is_not_last %}{% endif %}{% endfor %}</li>
-                <br><li>Sponsoring Department: {{ this_club.department }}</li><br>
-                <br><li>Link: {{ this_club.link }}</li>
-            </ul>
-          </div>
-          {% endfor %}
-          <!-- Footer -->
-<footer class="page-footer font-small">
+            </div>
+        </footer>
+    </div>
+</div>
 
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3" style="color:#fff !important">© 2020: 
-      <a href="https://www.instagram.com/uhs.stuco/" style="color:#fff !important; text-decoration:underline">VPs of Technology</a>
-    </div>
-    <!-- Copyright -->
-  
-  </footer>
-  <!-- Footer -->
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script>
-        // ('#search').change( function () {
-        // $('.card').show();
-        // var filter = $(this).val(); // get the value of the input, which we filter on
-        // Console.log($(this).val());
-        // $('.container').find(".card-title:not(:contains(" + filter + "))").parent().parent().css('display','none');
-        $(document).ready(function() {
-            $(".carousel-item").first().addClass("active");
-            $('.carousel').carousel()
-            var True = true
-            var False = false
-            var club_data = shuffleArray({{ info.is_array|safe }});
-            let shuffled_club_data = shuffleArray(club_data);
-            var club_dict = {{ info.is_dict|safe }};
-            $('#search').keyup(function(){
-                console.log("searching for "+$(this).val())
-                search_text($(this).val());
-            });
-            $('#show-affinity-groups').click(function(){
-                $('#cards').show();
-                $('#search-div').show();
-                $('.card').hide();
-                $('#carousel').hide();
-                $('.specific-club').hide();
-                $('.card-columns .affinity-group').each(function(){
-                    $(this).show()
-                });
-                $('.nav-link').each(function(){
-                    $(this).removeClass("active")
-                });
-                $(this).addClass("active");
-            });
-            $('#show-clubs').click(function(){
-                $('#cards').show();
-                $('#search-div').show();
-                $('.card').hide();
-                $('#carousel').hide();
-                $('.specific-club').hide();
-                $('.card-columns .club').each(function(){
-                    $(this).show()
-                });
-                $('.nav-link').each(function(){
-                    $(this).removeClass("active")
-                });
-                $(this).addClass("active");
-            });
-            $('#show-all').click(function(){
-                $('#cards').show();
-                $('#search-div').show();
-                $('.card').show();
-                $('#carousel').hide();
-                $('.specific-club').hide();
-                $('.nav-link').each(function(){
-                    $(this).removeClass("active")
-                });
-                $(this).addClass("active");
-            });
-            $('#show-carousel').click(function(){
-                $('#cards').hide();
-                $('#search-div').hide();
-                $('.specific-club').hide();
-                $('.nav-link').each(function(){
-                    $(this).removeClass("active")
-                });
-                $(this).addClass("active");
-                $('#carousel').show();
-            });
-            $('.specific-club-link').click(function() {
-                $('#carousel').hide();
-                // $('#cards').show();
-                // $('.card').hide();
-                $('.nav-link').each(function(){
-                     $(this).removeClass("active")
-                });
-                // console.log("searching for "+$(this).text())
-                // search_text($(this).text());
-                $('#'+$(this).attr("id").split("-link")[0]).show();
-            })
-        });
-    function search_text(value){
-        $('.card-columns .card').each(function(){
-            var found = 'false';
-            $(this).find('.card-body .card-title').each(function(){
-                if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
-                {
-                    found = 'true';
-                }
-            });
-            if(found == 'true'){
-                $(this).show()
-            }
-            else {
-                $(this).hide();
-            }
-        });
-    };
-    function shuffleArray(array) {
-        let shuffled = array.map((a) => ({sort: Math.random(), value: a})).sort((a, b) => a.sort - b.sort).map((a) => a.value)
-        return shuffled;
-    };
+                    <!--/Footer-->
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js" integrity="sha384-4oV5EgaV02iISL2ban6c/RmotsABqE4yZxZLcYMAdG7FAPsyHYAPpywE9PJo+Khy" crossorigin="anonymous"></script>
+<script>
+var date = new Date();
+var year = date.getFullYear();  
+document.getElementById("copyright_year").innerHTML = year.toString();
 </script>
+<script>
+   $('body').scrollspy({ target: '.navbar' })
+</script>
+{% block js %}
+{% endblock %}
 </body>
-
 </html>

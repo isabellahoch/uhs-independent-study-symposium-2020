@@ -16,9 +16,9 @@ gc = gspread.service_account(filename='service_account.json')
 sh = gc.open("Independent Study Symposium Master Spreadsheet")
 sheet = sh.sheet1
 
-@app.route('/')
-def generate_independent_study_symposium():
+def get_info():
     info = {}
+    info["categories"] = ["English", "History", "Math", "Science", "Languages", "Arts", "Human Development"]
     info["is_array"] = []
     info["is_dict"] = {}
     info["description"] = "get it from a different sheet perhaps?"
@@ -75,7 +75,18 @@ def generate_independent_study_symposium():
             this_item["profile_photo"] = "https://drive.google.com/uc?export=view&id="+this_item["profile_photo"].split("?id=")[1]
         if this_item["cover_photo"] == "":
             this_item["cover_photo"] = "https://via.placeholder.com/150?text="+this_item["title"]+" ("+this_item["name"]+")"
-    return render_template('base.html', info = info)
+    return info 
+
+@app.route('/')
+def generate_independent_study_symposium():
+    info = get_info()
+    return render_template('old_base.html', info = info)
+
+
+@app.route('/index')
+def generate_independent_study_symposium2():
+    info = get_info()
+    return render_template('index.html', info = info)
 
 
 
