@@ -79,6 +79,8 @@ def get_info():
             this_item["profile_photo"] = "https://drive.google.com/uc?export=view&id="+this_item["profile_photo"].split("?id=")[1]
         if "presentation" in this_item["link"]:
             this_item["embed_link"] = '<iframe src="https://docs.google.com/presentation/d/e/'+this_item["link"].split("/presentation/d/")[1].split("/")[0]+'/embed?start=false&loop=true&delayms=5000" frameborder="0" width="1440" height="839" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>'
+        if "/view" in this_item["link"]:
+            this_item["link"] = this_item["link"].replace("view","preview")
         if this_item["cover_photo"] == "":
             this_item["cover_photo"] = "https://via.placeholder.com/150?text="+this_item["title"]+" ("+this_item["name"]+")"
     return info 
@@ -111,6 +113,11 @@ def get_independent_studies_by_category(cat_id):
 def generate_independent_study_symposium2():
     info = get_info()
     return render_template('index.html', info = info)
+
+@app.route('/stop')
+def sorry():
+    info = get_info()
+    return render_template('bruh.html', info = info)
 
 
 
