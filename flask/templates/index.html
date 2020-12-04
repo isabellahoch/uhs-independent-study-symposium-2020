@@ -38,13 +38,13 @@
 <div class="container-fluid" style="padding-top:15px">
 
 <div class="card-columns" id="cards" style="font-family: 'Roboto', sans-serif;">
-    {% for this_club in info.is_array %}
-        <div class="card {% if this_club.is_affinity_group %}affinity-group{% else %}club{% endif %}">
-        <img class="card-img-top" src="{{ this_club.cover_photo }}" alt="Card image cap">
+    {% for this_independent_study in info.is_array %}
+        <div class="card {% if this_independent_study.is_affinity_group %}affinity-group{% else %}independent_study{% endif %}">
+        <img class="card-img-top" src="{{ this_independent_study.cover_photo }}" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title"><a href="/projects/{{ this_club.id }}"><strong style="color: #ab192d;">{{ this_club.title }} ({{ this_club.name }} {{ this_club.graduating_class }})</strong></a></h5>
-                <p class="card-text">Sponsor{% if this_club.sponsor_info[0].is_not_last %}s{% endif %}: {% for sponsor in this_club.sponsor_info %}{% if sponsor.is_not_first %}, {% else %}{% if sponsor.is_not_last %}{% if sponsor.is_not_first %} and {% endif %}{% endif %}{% endif %}<a style="color: #ab192d;" href="{{ sponsor.link }}">{{ sponsor.name }}</a>{% if sponsor.is_not_last %}{% endif %}{% endfor %}</p>
-                <p class="card-text">{{ this_club.description }}</p>
+                <h5 class="card-title"><a href="/projects/{{ this_independent_study.id }}"><strong style="color: #ab192d;">{{ this_independent_study.title }} ({{ this_independent_study.name }} '{{ this_independent_study.graduation_year }})</strong></a></h5>
+                <p class="card-text">Sponsor{% if this_independent_study.sponsor_info[0].is_not_last %}s{% endif %}: {% for sponsor in this_independent_study.sponsor_info %}{% if sponsor.is_not_first %}, {% else %}{% if sponsor.is_not_last %}{% if sponsor.is_not_first %} and {% endif %}{% endif %}{% endif %}<a style="color: #ab192d;" href="{{ sponsor.link }}">{{ sponsor.name }}</a>{% if sponsor.is_not_last %}{% endif %}{% endfor %}</p>
+                <p class="card-text">{{ this_independent_study.description }}</p>
             </div>
         </div>
     {% endfor %}

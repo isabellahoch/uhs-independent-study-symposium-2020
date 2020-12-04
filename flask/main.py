@@ -38,12 +38,11 @@ def get_info():
     all_info = sheet.get_all_values()
     all_info.pop(0)
     for item in all_info:			
-        this_item= {"timestamp":item[0], "email":item[1], "name":item[2],"graduation_year":item[3],"sponsor":item[4],"department":item[5],"title":item[6],"description":item[7],"link":item[8],"cover_photo":item[9],"profile_photo":item[10],"zoom_link":item[11],"proj_type":item[12],"id":item[13]}
+        this_item= {"timestamp":item[0], "email":item[1], "name":item[2],"graduation_year":item[3],"sponsor":item[4],"department":item[5],"title":item[6],"description":item[7],"link":item[8],"cover_photo":item[9],"profile_photo":item[10],"zoom_link":item[11],"proj_type":item[12],"id":item[13],"new_link":item[14]}
         this_item["index"] = all_info.index(item)
         if "," in this_item["name"]:
             this_item["names"] = this_item["name"].split(", ")
         this_item["name_info"] = []
-        print(this_item["title"])
         info["is_names"].append(this_item["title"].lower())
         # for leader in this_item["leader_array"]:
         #     leader_dict = {"name": leader,"link":"https://www.sfuhs.org/student/community-directory?utf8=%E2%9C%93&const_search_role_ids=6%2C2%2C1&const_search_first_name="+leader.split(" ")[0]+"&const_search_last_name="+leader.split(" ")[1]}
@@ -92,6 +91,8 @@ def get_info():
             this_item["embed_link"] = '<iframe src="https://docs.google.com/presentation/d/e/'+this_item["link"].split("/presentation/d/")[1].split("/")[0]+'/embed?start=false&loop=true&delayms=5000" frameborder="0" width="1440" height="839" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>'
         if "/view" in this_item["link"]:
             this_item["link"] = this_item["link"].replace("view","preview")
+        if this_item["new_link"] != "":
+            this_item["link"] = this_item["new_link"]
         if this_item["cover_photo"] == "":
             this_item["cover_photo"] = "https://via.placeholder.com/150?text="+this_item["title"]+" ("+this_item["name"]+")"
     return info 
@@ -138,9 +139,14 @@ def get_independent_studies_by_search():
 
 
 @app.route('/')
-def generate_independent_study_symposium2():
+def index():
     info = get_info()
     return render_template('index.html', info = info)
+
+@app.route('/slideshow')
+def slideshow():
+    info = get_info()
+    return render_template('carousel.html', info = info)
 
 @app.route('/stop')
 def sorry():
