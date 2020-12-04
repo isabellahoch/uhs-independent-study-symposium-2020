@@ -7,11 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{% block description %}{% endblock %}">
     <meta name="keywords" content="uhs, university high school, independent study symposium,{% block keywords %}{% endblock %}">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}Fall 2020 Independent Study Symposium</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Raleway|Comfortaa|Lobster+Two|Luckiest+Guy|Poiret+One|Sigmar+One" rel="stylesheet">
+    <link rel="icon" href="https://www.sfuhs.org/uploaded/favicon.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     {% block head %}{% endblock %}
     <style>
@@ -21,6 +22,28 @@
         * {
             font-family: raleway, sans-serif;
         }
+
+        @media (min-width:320px)  { /* smartphones, iPhone, portrait 480x320 phones */ }
+        @media (min-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ }
+        @media (min-width:641px)  { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ }
+        @media (min-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+        @media (min-width:1025px) { 
+            #main {
+                padding-top:50px;
+            }/* big landscape tablets, laptops, and desktops */ }
+        @media (min-width:1281px) { /* hi-res laptops and desktops */ }
+        .btn-outline-uhs:hover {
+            color: #fff;
+            background-color: #ab192d;
+            border-color: #ab192d;
+        }
+        .btn-outline-uhs {
+            color: #ab192d;
+            background-color: transparent;
+            background-image: none;
+            border-color: #ab192d;
+        }
+
     </style>
 </head>
 
@@ -29,29 +52,29 @@
 
   <div class="container-fluid" style="background-color#efefef">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">Independent Study Symposium</a>
+        <a class="navbar-brand" href="/" style="font-size:12pt; color:#ab192d">Independent Study Symposium</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-              <a class="nav-link" href="/">Home</a>
+            <li class="nav-item ">
+              <a class="nav-link" href="/">View All</a>
             </li>
             {% for category in info.categories %}
-            <li class="nav-item ">
-                <a class="nav-link " id="{{ category }}" href="/categories/{{ category.lower().replace(' ','-') }}">{{ category }}</a>
+            <li class="nav-item " id="{{ category }}">
+                <a class="nav-link "href="/categories/{{ category.lower().replace(' ','-') }}">{{ category }}</a>
             </li>
             {% endfor %}
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search">
-            <a href="/stop" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</a>
+          <form class="form-inline my-2 my-lg-0" action="/search">
+              {{ info.form.search }}
+              {{ info.form.submit }}
           </form>
         </div>
       </nav>
-    <div class="container-fluid" id="main" style="padding-top:50px">
+    <div class="container-fluid" id="main">
         {% block content %}{% endblock %}
         <footer class="page-footer deep-purple center-on-small-only pt-0">
             <!-- <hr class="rgba-white-light">
@@ -73,7 +96,7 @@
             <hr class="clearfix rgba-white-light">
             <div class="row d-flex text-center justify-content-center mb-md-0 mb-4">
                 <div class="col-md-8 col-12 mt-5">
-                <p style="line-height: 1.7rem">&copy; <span id="copyright_year">2020</span>: <a class="link" href="/"> VPs of Technology </a></p>
+                <p style="line-height: 1.7rem">&copy; <span id="copyright_year">2020</span>: <a class="link" href="/" style="color:#ab192d"> VPs of Technology </a></p>
                 </div>
             </div>
             </div>
@@ -94,6 +117,16 @@ document.getElementById("copyright_year").innerHTML = year.toString();
 </script>
 <script>
    $('body').scrollspy({ target: '.navbar' })
+</script>
+<script>
+    if(document.getElementById("header") != null) {
+        $("#header").addClass("active");
+    }
+    {% for category in info.categories %}
+    else if(document.getElementById("active-{{ category }}") != null) {
+        $("#{{ category }}").addClass("active");
+    }
+    {% endfor %}
 </script>
 {% block js %}
 {% endblock %}

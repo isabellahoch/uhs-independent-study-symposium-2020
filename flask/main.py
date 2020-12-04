@@ -2,12 +2,14 @@ from flask import Flask, render_template, request, redirect, url_for, make_respo
 import os
 from flask_compress import Compress
 import datetime
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 COMPRESS_MIMETYPES = ['text/html', 'text/css', 'application/json']
 COMPRESS_LEVEL = 6
 COMPRESS_MIN_SIZE = 500
 Compress(app)
+Bootstrap(app)
 
 app.config['SECRET_KEY'] = os.urandom(24)
 
@@ -16,8 +18,17 @@ gc = gspread.service_account(filename='service_account.json')
 sh = gc.open("Independent Study Symposium Master Spreadsheet")
 sheet = sh.sheet1
 
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired
+
+class SearchForm(FlaskForm):
+    search = StringField('Search', validators=[DataRequired()],render_kw = {"class":"form-control mr-sm-2", "type":"search","placeholder":"Search"})
+    submit = SubmitField('GO', render_kw = {"class":"btn btn-outline-uhs my-2 my-sm-0"})
+
 def get_info():
     info = {}
+    info["form"] = SearchForm()
     info["categories"] = ["English", "History", "Math", "Science", "Languages", "Arts", "Human Development"]
     info["is_array"] = []
     info["is_dict"] = {}
@@ -106,7 +117,24 @@ def get_independent_studies_by_category(cat_id):
     category = info["category_is_dict"][cat_id]
     info["is_dict"] = category
     info["is_array"] = category
-    return render_template('index.html', info = info, category = category)
+    return render_template('index.html', info = info, category_id = cat_id, category = cat_id.replace("-"," ").title())
+
+@app.route('/search',methods=['GET','POST'])
+def get_independent_studies_by_search():
+    if request.method=="POST":
+        print("post.")
+    info = get_info()
+    query = info["form"].search.data
+    query = request.args.get('search')
+    if query is None:
+        query = " "
+    matches = []
+    for item in info["is_array"]:
+        if query.lower() in item["title"].lower() or query in item["name"].lower():
+            matches.append(item)
+    info["is_dict"] = matches
+    info["is_array"] = matches
+    return render_template('index.html', info = info, category_id = "search", category = 'Search Results for "'+query+'"')
 
 
 @app.route('/')
