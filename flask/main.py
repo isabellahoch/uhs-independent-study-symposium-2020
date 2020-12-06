@@ -92,6 +92,8 @@ def get_info():
             this_item["profile_photo"] = "https://drive.google.com/uc?export=view&id="+this_item["profile_photo"].split("?id=")[1]
         if "presentation" in this_item["link"]:
             this_item["embed_link"] = '<iframe src="https://docs.google.com/presentation/d/e/'+this_item["link"].split("/presentation/d/")[1].split("/")[0]+'/embed?start=false&loop=true&delayms=5000" frameborder="0" width="1440" height="839" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>'
+        if this_item["link_2"] == "":
+            this_item["link_2"] = None
         if "/view" in this_item["link"]:
             this_item["link"] = this_item["link"].replace("view","preview")
         if this_item["new_link"] != "":
