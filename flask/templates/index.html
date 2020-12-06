@@ -33,11 +33,8 @@
 <!-- <img alt="UHS Yearbook Piece Red.jpeg" src="https://static.wixstatic.com/media/6202de_7273eceab69c4c09b846a20ebc5f8b77~mv2.jpeg/v1/fill/w_981,h_1102,al_c,q_85,usm_0.66_1.00_0.01/6202de_7273eceab69c4c09b846a20ebc5f8b77~mv2.webp" style="width: 981px; height: 1102px; object-fit: cover;"> -->
 </div>
 {% endif %}
-
-
-
 <div class="container-fluid" style="padding-top:15px">
-
+    {% if info.is_array|length > 0 %}
 <div class="card-columns" id="cards" style="font-family: 'Roboto', sans-serif;">
     {% for this_independent_study in info.is_array %}
         <div class="card {% if this_independent_study.is_affinity_group %}affinity-group{% else %}independent_study{% endif %}">
@@ -50,6 +47,11 @@
         </div>
     {% endfor %}
 </div>
+{% else %}
+<div class="row text-center">
+    <h3>No matching independent studies found.</h3>
+</div>
+{% endif %}
 </div>
 {% endblock %}
 {% block js %}

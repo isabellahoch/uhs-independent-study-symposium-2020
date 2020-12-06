@@ -115,7 +115,10 @@ def get_independent_study(proj_id):
 @app.route('/categories/<cat_id>')
 def get_independent_studies_by_category(cat_id):
     info = get_info()
-    category = info["category_is_dict"][cat_id]
+    if cat_id in info["category_is_dict"]:
+        category = info["category_is_dict"][cat_id]
+    else:
+        category = []
     info["is_dict"] = category
     info["is_array"] = category
     return render_template('index.html', info = info, category_id = cat_id, category = cat_id.replace("-"," ").title())
