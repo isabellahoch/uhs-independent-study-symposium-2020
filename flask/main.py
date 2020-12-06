@@ -29,7 +29,7 @@ class SearchForm(FlaskForm):
 def get_info():
     info = {}
     info["form"] = SearchForm()
-    info["categories"] = ["English", "History", "Math", "Science", "Languages", "Arts", "Human Development"]
+    info["categories"] = ["English", "History", "Math", "Science", "Languages", "Arts", "HD"]
     info["is_array"] = []
     info["is_dict"] = {}
     info["description"] = "get it from a different sheet perhaps?"
@@ -77,6 +77,8 @@ def get_info():
         info["is_array"].append(this_item)
         info["is_dict"][this_item["id"]] = this_item
         this_item["department_id"] = this_item["department"].lower().replace(" ","-")
+        if this_item["department_id"] == "human-development":
+            this_item["department_id"] = "hd"
         if this_item["department_id"] not in info["category_is_dict"]:
             info["category_is_dict"][this_item["department_id"]] = []
         info["category_is_dict"][this_item["department_id"]].append(this_item)
