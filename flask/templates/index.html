@@ -19,6 +19,7 @@
 
     </style>
 {% endblock %}
+{% block title %}{% if category_id %}{{ category }} Independent Studies | {% endif %}{% endblock %}
 {% block content %}
 {% if category_id %}
 <div class="container-fluid text-center">
