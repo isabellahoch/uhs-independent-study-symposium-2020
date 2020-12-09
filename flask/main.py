@@ -82,6 +82,27 @@ def get_info():
             else:
                 this_item["short_description"] = this_item["short_description"][:x-1]
         this_item["short_description"] = this_item["short_description"].strip()+"..."
+        # if len(item)>=11:
+        #     if item[10] == "Yes":
+        #         this_item["is_affinity_group"] = True
+        if "?id=" in this_item["cover_photo"]:
+            this_item["cover_photo"] = "https://drive.google.com/uc?export=view&id="+this_item["cover_photo"].split("?id=")[1]
+        if "?id=" in this_item["profile_photo"]:
+            this_item["profile_photo"] = "https://drive.google.com/uc?export=view&id="+this_item["profile_photo"].split("?id=")[1]
+        # if "presentation" in this_item["link"]:
+        #     this_item["embed_link"] = '<iframe src="https://drive.google.com/embeddedfolderview?id='+this_item["link"].split("/folders/")[1].split("?")[0]+'/#grid" frameborder="0" width="1440" height="839" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>'
+        if this_item["new_link"] != "":
+            this_item["link"] = this_item["new_link"]
+        if "folder" in this_item["link"]:
+            this_item["link"] = "https://drive.google.com/embeddedfolderview?id="+this_item["link"].split("/folders/")[1].split("?")[0]+"#grid"
+        if "/pub" in this_item["link"]:
+            this_item["link"] = this_item["link"].split("/pub")[0]+"/embed?start=true&loop=true&delayms=3000"
+        if this_item["link_2"] == "":
+            this_item["link_2"] = None
+        if "/view" in this_item["link"]:
+            this_item["link"] = this_item["link"].replace("view","preview")
+        if this_item["cover_photo"] == "":
+            this_item["cover_photo"] = "https://via.placeholder.com/150?text="+this_item["title"]+" ("+this_item["name"]+")"
         info["is_array"].append(this_item)
         info["is_dict"][this_item["id"]] = this_item
         this_item["department_id"] = this_item["department"].lower().replace(" ","-")
@@ -90,23 +111,6 @@ def get_info():
         if this_item["department_id"] not in info["category_is_dict"]:
             info["category_is_dict"][this_item["department_id"]] = []
         info["category_is_dict"][this_item["department_id"]].append(this_item)
-        # if len(item)>=11:
-        #     if item[10] == "Yes":
-        #         this_item["is_affinity_group"] = True
-        if "?id=" in this_item["cover_photo"]:
-            this_item["cover_photo"] = "https://drive.google.com/uc?export=view&id="+this_item["cover_photo"].split("?id=")[1]
-        if "?id=" in this_item["profile_photo"]:
-            this_item["profile_photo"] = "https://drive.google.com/uc?export=view&id="+this_item["profile_photo"].split("?id=")[1]
-        if "presentation" in this_item["link"]:
-            this_item["embed_link"] = '<iframe src="https://docs.google.com/presentation/d/e/'+this_item["link"].split("/presentation/d/")[1].split("/")[0]+'/embed?start=false&loop=true&delayms=5000" frameborder="0" width="1440" height="839" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>'
-        if this_item["link_2"] == "":
-            this_item["link_2"] = None
-        if "/view" in this_item["link"]:
-            this_item["link"] = this_item["link"].replace("view","preview")
-        if this_item["new_link"] != "":
-            this_item["link"] = this_item["new_link"]
-        if this_item["cover_photo"] == "":
-            this_item["cover_photo"] = "https://via.placeholder.com/150?text="+this_item["title"]+" ("+this_item["name"]+")"
     return info 
 
 def get_by_id(proj_id):

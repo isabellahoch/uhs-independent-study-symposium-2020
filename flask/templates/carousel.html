@@ -67,7 +67,7 @@
         <div class="carousel-inner">
             {% for this_study in info.is_array %}
             <div class="carousel-item">
-                <img class="d-block w-100 carousel-img" src="{{ this_study.cover_photo }}" alt="...">
+                <img class="d-block w-100 carousel-img" src="{{ this_study.cover_photo }}" alt="..." style="max-height: 80vh;">
                 <div class="carousel-caption d-none d-md-block" style="background: rgba(200, 54, 54, 0.5)">
                     <h5>{{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})</h5>
                     <p>{{ this_study.short_description }}</p>
