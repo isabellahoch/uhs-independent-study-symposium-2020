@@ -39,7 +39,7 @@ def get_info():
     all_info.pop(0)
     all_info.pop(0)
     for item in all_info:			
-        this_item = {"timestamp":item[0], "email":item[1], "name":item[2], "graduation_year":item[3], "sponsor":item[4], "department":item[5], "title":item[6], "description":item[7], "link":item[8], "cover_photo":item[9], "profile_photo":item[10], "zoom_link":item[11], "proj_type":item[12], "sharing_confirmation":item[13], "if_synchronous":item[14], "additional_comments":item[15], "random":item[16], "group_names":item[17], "random_2":item[18], "link_2":item[19], "if_slideshow":item[20], "id":item[21], "new_link":item[22]}
+        this_item = {"timestamp":item[0], "email":item[1], "name":item[2], "graduation_year":item[3], "sponsor":item[4], "department":item[5], "title":item[6], "description":item[7], "link":item[8], "cover_photo":item[9], "profile_photo":item[10], "zoom_link":item[11], "proj_type":item[12], "sharing_confirmation":item[13], "if_synchronous":item[14], "additional_comments":item[15], "random":item[16], "group_names":item[17], "random_2":item[18], "link_2":item[19], "if_slideshow":item[20], "id":item[21], "new_link":item[22], "david":item[23]}
         this_item["index"] = all_info.index(item)
         if "," in this_item["name"]:
             this_item["names"] = this_item["name"].split(", ")
@@ -99,6 +99,8 @@ def get_info():
             this_item["link"] = this_item["link"].split("/pub")[0]+"/embed?start=true&loop=true&delayms=3000"
         if this_item["link_2"] == "":
             this_item["link_2"] = None
+        if this_item["david"] == "":
+            this_item["david"] = None
         if "/view" in this_item["link"]:
             this_item["link"] = this_item["link"].replace("view","preview")
         if this_item["cover_photo"] == "":
