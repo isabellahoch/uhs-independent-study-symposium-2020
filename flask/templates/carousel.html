@@ -44,6 +44,13 @@
           body {
             background-color:#e0e0e0;
           }
+
+          .carousel-caption {
+            background-color: rgba(0,0,0,0.8);
+          }
+          .carousel-caption-btn {
+            background-color:#fff;
+          }
         </style>
         {% endblock %}
 {% block content %}
@@ -64,7 +71,7 @@
                 <div class="carousel-caption d-none d-md-block">
                     <h5>{{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})</h5>
                     <p>{{ this_study.description }}</p>
-                    <a class="btn btn-see-more" href="/projects/{{ this_study.id }}">READ MORE HERE</a>
+                    <a class="carousel-caption-btn btn btn-see-more" href="/projects/{{ this_study.id }}">READ MORE HERE</a>
                 </div>
             </div>
             {% endfor %}
