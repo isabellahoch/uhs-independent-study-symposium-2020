@@ -75,6 +75,13 @@ def get_info():
                 sponsor_dict["is_not_last"] = False
                 sponsor_dict["is_not_first"] = False
             this_item["sponsor_info"].append(sponsor_dict)
+        this_item["short_description"] = this_item["description"][:250]
+        for x in range(250, 0, -1):
+            if this_item["short_description"][x-1] == " ":
+                break
+            else:
+                this_item["short_description"] = this_item["short_description"][:x-1]
+        this_item["short_description"] = this_item["short_description"].strip()+"..."
         info["is_array"].append(this_item)
         info["is_dict"][this_item["id"]] = this_item
         this_item["department_id"] = this_item["department"].lower().replace(" ","-")
