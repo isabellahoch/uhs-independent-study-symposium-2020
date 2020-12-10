@@ -178,10 +178,16 @@ def get_info():
         this_item["short_description"] = this_item["description"][:250]
         for x in range(250, 0, -1):
             if len(this_item["short_description"]) > 2:
-                if this_item["short_description"][x-1] == " ":
-                    break
-                else:
-                    this_item["short_description"] = this_item["short_description"][:x-1]
+                try:
+                    new_variable = this_item["short_description"][x-1]
+                    if  new_variable == " ":
+                        break
+                    else:
+                        this_item["short_description"] = this_item["short_description"][:x-1]
+                except:
+                    print(this_item["title"]+" description error")
+
+               
         this_item["short_description"] = this_item["short_description"].strip()+"..."
         # if len(item)>=11:
         #     if item[10] == "Yes":
