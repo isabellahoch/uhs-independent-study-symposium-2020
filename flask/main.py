@@ -232,6 +232,7 @@ def get_truncated_info():
         info["user"] = {"email":current_user.email}
     info["form"] = SearchForm()
     info["categories"] = ["English", "History", "Math", "Science", "Languages", "Arts", "HD"]
+    return info
 
 def get_by_id(proj_id):
     info = get_info()
