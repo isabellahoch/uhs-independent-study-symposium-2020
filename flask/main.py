@@ -177,7 +177,7 @@ def get_info():
             this_item["sponsor_info"].append(sponsor_dict)
         this_item["short_description"] = this_item["description"][:250]
         for x in range(250, 0, -1):
-            if len(this_item["short_description"]) > 1:
+            if len(this_item["short_description"]) > 2:
                 if this_item["short_description"][x-1] == " ":
                     break
                 else:
