@@ -111,7 +111,10 @@ def login():
     if alert:
         return render_template('login.html', form=form, info = get_truncated_info(), if_alert = True, alert = alert)
     next_url = request.args.get("next")
-    return render_template('login.html', next=next_url, form=form, info = get_truncated_info())
+    info = get_truncated_info()
+    if next_url and next_url.strip() != "" and next_url.strip() != "/" or not next_url:
+        info["alert"] = True
+    return render_template('login.html', next=next_url, form=form, info = info)
 
 @app.route('/logout')
 def logout():
