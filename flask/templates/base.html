@@ -110,10 +110,13 @@
               <button type="submit" class="btn btn-outline-uhs"><i class="fas fa-search"></i></button>
               <!-- {{ info.form.submit }} -->
           </form>
+          {% if info.user %}
           <a class="nav-link {% block dashboardisactive %}{% endblock %}" href="/dashboard"><i class="fas fa-user-circle" style="font-size:30px"></i></a>
+          {% endif %}
         </li>
         </div>
       </nav>
+    
     <div class="container-fluid" id="main">
         {% block content %}{% endblock %}
         <footer class="page-footer deep-purple center-on-small-only pt-0">
