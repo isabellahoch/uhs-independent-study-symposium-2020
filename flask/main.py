@@ -134,6 +134,7 @@ def get_info():
     info["is_dict"] = {}
     info["description"] = "get it from a different sheet perhaps?"
     info["is_names"] = []
+    info["zoom_array"] = []
     info["category_is_dict"] = {}
     all_info = sheet.get_all_values()
     all_info.pop(0)
@@ -219,6 +220,8 @@ def get_info():
             this_item["department_id"] = "hd"
         if this_item["department_id"] not in info["category_is_dict"]:
             info["category_is_dict"][this_item["department_id"]] = []
+        if this_item["zoom_link"] != "":
+            info["zoom_array"].append(this_item)
         info["category_is_dict"][this_item["department_id"]].append(this_item)
         if "user" in info and info["user"]["email"] == this_item["email"]:
             if "independent_studies" not in info["user"]:
@@ -249,6 +252,11 @@ def generate_independent_study_symposium():
 def dashboard():
     info = get_info()
     return render_template('dashboard.html', info = info)
+
+@app.route('/schedule')
+def schedule():
+    info = get_info()
+    return render_template('schedule.html', info = info)
 
 @app.route('/projects/<proj_id>')
 @login_required

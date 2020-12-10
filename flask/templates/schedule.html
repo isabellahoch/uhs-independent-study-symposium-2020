@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | {% endblock %}
+{% block content %}
+<div class="row">
+	<div class="row align-items-center justify-content-center" style="width:100%; text-align:center; padding-bottom:25px">
+        <h1>Synchronous Independent Study Symposium Schedule</h1>
+    </div>
+    <h2>Session 1 - Mandatory. See Cluster Assignments.</h2>
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRQ5TK4D37j0vMnPgY2-gPOzTtidQZKXACQUvDx7gtKa0PVMXJUsCzgd29Awb2lSSROU1a7V2nD5v01/pubhtml?gid=203845004&amp;single=true&amp;widget=true&amp;headers=false" frameborder=0 style="width:100%; height:500px"></iframe>
+    <h2>Session 2</h2>
+    <ul>
+        {% for this_study in info.zoom_array %}
+        <li style="padding:5px"><strong>{{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})</strong>: <a href="{{ this_study.zoom_link }}">{{ this_study.zoom_link }}</a> (see <a href="/projects/{{ this_study.id }}">here</a> for description & more)</li>
+        {% endfor %}
+    </ul>
+    <h2>Session 3</h2>
+    <ul>
+        {% for this_study in info.zoom_array %}
+        <li><strong>{{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})</strong>: <a href="{{ this_study.zoom_link }}">{{ this_study.zoom_link }}</a> (see <a href="/projects/{{ this_study.id }}">here</a> for description & more)</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
