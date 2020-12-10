@@ -14,10 +14,59 @@
         {% endfor %}
     </ul>
     <h2>Session 3</h2>
-    <ul>
+    <div class="accordion" id="accordion">
         {% for this_study in info.zoom_array %}
-        <li><strong>{{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})</strong>: <a href="{{ this_study.zoom_link }}">{{ this_study.zoom_link }}</a> (see <a href="/projects/{{ this_study.id }}">here</a> for description & more)</li>
+        <div class="card">
+          <div class="card-header" id="heading-{{ this_study.id }}">
+            <h2 class="mb-0">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{ this_study.id }}" aria-expanded="true" aria-controls="collapse-{{ this_study.id }}"><i class="fa fa-plus"></i>
+                {{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})
+              </button>
+            </h2>
+          </div>
+      
+          <div id="collapse-{{ this_study.id }}" class="collapse hide" aria-labelledby="heading-{{ this_study.id }}" data-parent="#accordion">
+            <div class="card-body">
+                {{ this_study.description }}
+                <ul class="list-unstyled">
+              <li><strong>Zoom Link: </strong><a href="{{ this_study.zoom_link }}">{{ this_study.zoom_link }}</a></li>
+              <li><strong>Project Link: </strong><a href="/projects/{{ this_study.id }}">http://independentstudy.sfuhs.org/projects/{{ this_study.id }}</a></li>
+            </ul>
+            </div>
+          </div>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
+{% endblock %}
+{% block js %}
+<script>
+    // $(document).ready(function(){
+    //     // Add minus icon for collapse element which is open by default
+    //     $(".collapse.show").each(function(){
+    //     	$(this).prev(".card-header").find(".fa").addClass("fa-minus").removeClass("fa-plus");
+    //     });
+        
+    //     // Toggle plus minus icon on show hide of collapse element
+    //     $(".collapse").on('.show.collapse', function(){
+    //     	$(this).prev(".card-header").find(".fa").removeClass("fa-plus").addClass("fa-minus");
+    //     }).on('.hide.collapse', function(){
+    //     	$(this).prev(".card-header").find(".fa").removeClass("fa-minus").addClass("fa-plus");
+    //     });
+    // });
+    $(document).ready(function(){
+        // Add minus icon for collapse element which is open by default
+        $(".collapse.show").each(function(){
+        	$(this).prev(".card-header").find(".fa").addClass("fa-minus").removeClass("fa-plus");
+        });
+        
+        // Toggle plus minus icon on show hide of collapse element
+        $(".collapse").on('show.bs.collapse', function(){
+            console.log("here")
+        	$(this).prev(".card-header").find(".fa").removeClass("fa-plus").addClass("fa-minus");
+        }).on('hide.bs.collapse', function(){
+        	$(this).prev(".card-header").find(".fa").removeClass("fa-minus").addClass("fa-plus");
+        });
+    });
+</script>
 {% endblock %}
