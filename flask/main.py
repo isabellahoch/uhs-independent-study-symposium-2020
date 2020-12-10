@@ -109,9 +109,9 @@ def login():
         # return redirect(url_for('index'))
         return redirect(url_for('dashboard'))
     if alert:
-        return render_template('login.html', form=form, info = get_info(), if_alert = True, alert = alert)
+        return render_template('login.html', form=form, info = get_truncated_info(), if_alert = True, alert = alert)
     next_url = request.args.get("next")
-    return render_template('login.html', next=next_url, form=form, info = get_info())
+    return render_template('login.html', next=next_url, form=form, info = get_truncated_info())
 
 @app.route('/logout')
 def logout():
@@ -225,6 +225,13 @@ def get_info():
                 info["user"]["independent_studies"] = []
             info["user"]["independent_studies"].append(this_item)
     return info 
+
+def get_truncated_info():
+    info = {}
+    if current_user.is_authenticated:
+        info["user"] = {"email":current_user.email}
+    info["form"] = SearchForm()
+    info["categories"] = ["English", "History", "Math", "Science", "Languages", "Arts", "HD"]
 
 def get_by_id(proj_id):
     info = get_info()
