@@ -94,7 +94,7 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item " id="home">
-              <a class="nav-link" href="/">View All</a>
+              <a class="nav-link" href="/view-all">View All</a>
             </li>
             {% for category in info.categories %}
             <li class="nav-item " id="{{ category }}">
@@ -107,8 +107,11 @@
           </ul>
           <form class="form-inline my-2 my-lg-0" action="/search">
               {{ info.form.search }}
-              {{ info.form.submit }}
+              <button type="submit" class="btn btn-outline-uhs"><i class="fas fa-search"></i></button>
+              <!-- {{ info.form.submit }} -->
           </form>
+          <a class="nav-link {% block dashboardisactive %}{% endblock %}" href="/dashboard"><i class="fas fa-user-circle" style="font-size:30px"></i></a>
+        </li>
         </div>
       </nav>
     <div class="container-fluid" id="main">
@@ -133,7 +136,7 @@
             <hr class="clearfix rgba-white-light">
             <div class="row d-flex text-center justify-content-center mb-md-0 mb-4">
                 <div class="col-md-8 col-12 mt-5">
-                    <p style="line-height: 1.7rem"><a class="link" href="mailto:independentstudy2020@sfuhs.org" style="color:#ab192d">independentstudy2020@sfuhs.org</a></p>
+                    <!-- <p style="line-height: 1.7rem"><a class="link" href="mailto:independentstudy2020@sfuhs.org" style="color:#ab192d">independentstudy2020@sfuhs.org</a></p> -->
                 <p style="line-height: 1.7rem">&copy; <span id="copyright_year">2020</span>: <a class="link" href="/" style="color:#ab192d"> VPs of Technology </a></p>
                 </div>
             </div>

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | {% endblock %}
+{% block content %}
+<div class="row">
+	<div class="row align-items-center justify-content-center" style="width:100%; text-align:center; padding-bottom:25px">
+            <h1>Welcome!</h1>
+            <h3>You are logged in as {{ info.user.email }}. <a href="/logout" style="text-decoration:solid">Log Out.</a></h3>
+    </div>
+    {% if info.user.independent_studies %}
+    <hr>
+    <div class="row">
+        <h2>Thank you for contributing to the Independent Study Symposium!</h2>
+        <p>You can view your independent stud{% if info.user.independent_studies|length==1 %}y{% else %}ies{% endif %} below. Please let David '21 (<a href="mailto:isabella.hochschi_21@sfuhs.org">isabella.hochschi_21@sfuhs.org</a>), Isabella '21 (<a href="mailto:david.wignall_21@sfuhs.org">david.wignall_21@sfuhs.org</a>), & Evan '21 (<a href="mailto:evancarlo.fowler_21@sfuhs.org">evancarlo.fowler_21@sfuhs.org</a>) know if you have any questions or concerns about how {% if info.user.independent_studies|length==1 %}it is{% else %}they are{% endif %} formatted. And please use the menu above to check out some of the incredible work your peers did this semester!</p>
+        <ul>
+            {% for this_study in info.user.independent_studies %}
+            <li><h5><a href="/projects/{{ this_study.id }}">{{ this_study.title }} (sponsored by {{ this_study.sponsor }})</a></h5></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+    <div class="row">
+        <h2>Thank you for visiting the Independent Study Symposium website!</h2>
+        <p>Please use the menu above to view this year's incredible set of independent studies.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

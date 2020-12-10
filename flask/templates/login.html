@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Log In | {% endblock %}
+{% block content %}
+<!-- <h1>Registration</h1> -->
+<!-- <div class="container-fluid"> -->
+    <div id="banner" class="row text-center align-items-center justify-content-center" style="max-height:100vh; background: url(https://static.wixstatic.com/media/6202de_7273eceab69c4c09b846a20ebc5f8b77~mv2.jpeg/v1/fill/w_981,h_1102,al_c,q_85,usm_0.66_1.00_0.01/6202de_7273eceab69c4c09b846a20ebc5f8b77~mv2.webp) no-repeat center; background-size: cover; ">
+        <h1 id="header" style="background-color: rgba(0, 0, 0, 0.6);">FALL 2020 INDEPENDENT STUDY SYMPOSIUM</h1>
+        <div class="row align-items-center justify-content-center" style="background-color: rgba(355, 355, 355, 0.6); padding:20px">
+            <div style="width:100%; text-align:center; padding-bottom:25px">
+                    <h1 style="color:#000 !important">Log In</h1>
+            </div>
+            <br>
+            <form action="/" method="post" class="form">
+              <p>Email* </p>
+              {{ form.email }}
+              <p style="padding-top:10px;">Access Code*</p>
+              {{ form.password }}
+              {{ form.hidden_tag() }}
+              <br>
+              <br>
+              {{ form.submit }}
+              <input type=hidden value="{{ next or '' }}" name=next>
+            </form>
+        </div>
+    </div>
+    <!-- <img alt="UHS Yearbook Piece Red.jpeg" src="https://static.wixstatic.com/media/6202de_7273eceab69c4c09b846a20ebc5f8b77~mv2.jpeg/v1/fill/w_981,h_1102,al_c,q_85,usm_0.66_1.00_0.01/6202de_7273eceab69c4c09b846a20ebc5f8b77~mv2.webp" style="width: 981px; height: 1102px; object-fit: cover;"> -->
+
+
+{% endblock %}
+{% block js %}
+{% if if_alert %}
+<script>
+	$(document).ready(function() {
+	  alert("{{ alert }}");
+	  console.log("{{ alert }}")
+	});
+</script>
+{% endif %}
+{% endblock %}

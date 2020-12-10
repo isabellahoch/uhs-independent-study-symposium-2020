@@ -18,16 +18,116 @@ gc = gspread.service_account(filename='service_account.json')
 sh = gc.open("Independent Study Symposium Master Spreadsheet")
 sheet = sh.sheet1
 
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired
+from forms import SearchForm, LoginForm
 
-class SearchForm(FlaskForm):
-    search = StringField('Search', validators=[DataRequired()],render_kw = {"class":"form-control mr-sm-2", "type":"search","placeholder":"Search"})
-    submit = SubmitField('GO', render_kw = {"class":"btn btn-outline-uhs my-2 my-sm-0"})
+
+from flask_login import LoginManager, current_user, login_user, login_required, logout_user
+login = LoginManager(app)
+login.login_view = 'login'
+ACCESS_CODE = "gobigred"
+
+from flask_sqlalchemy import SQLAlchemy
+
+sql_db = SQLAlchemy()
+
+sql_db.init_app(app)
+
+class User(sql_db.Model):
+    """An admin user capable of viewing reports.
+
+    :param str email: UHS email address of user
+
+    """
+    __tablename__ = 'user'
+
+    email = sql_db.Column(sql_db.String, primary_key=True)
+    authenticated = sql_db.Column(sql_db.Boolean, default=False)
+
+    def is_active(self):
+        """True, as all users are active."""
+        return True
+
+    def get_id(self):
+        """Return the email address to satisfy Flask-Login's requirements."""
+        return self.email
+
+    def is_authenticated(self):
+        """Return True if the user is authenticated."""
+        return self.authenticated
+
+    def is_anonymous(self):
+        """False, as anonymous users aren't supported."""
+        return False
+
+# @app.route('/temporary-test')
+# def temporary_test():
+#     sql_db.create_all()
+#     test_user = User(email="studentitteam@sfuhs.org")
+#     sql_db.session.add(test_user)
+#     sql_db.session.commit()
+
+@login.user_loader
+def load_user(user_id):
+    # return User.query.get(int(id))
+    return User.query.filter_by(email=user_id).first()
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    sql_db.create_all()
+    alert = request.args.get('alert')
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    print("here")
+    if form.validate_on_submit():
+        next_url = request.args.get("next")
+        if next_url:
+            print("aha")
+        else:
+            print("whyyy")
+            print(request.form.get("next"))
+            if request.form.get("next"):
+                next_url = request.form.get("next")
+            print(request.path)
+        print(next_url)
+        if form.password.data != ACCESS_CODE:
+            print(form.password.data)
+            alert='Invalid access code. Please try again or contact UHS administration for help.'
+            return redirect(url_for('login', alert=alert, next=next_url))
+        user = User.query.filter_by(email=form.email.data).first()
+        if not user:
+            user = User(email=form.email.data)
+            sql_db.session.add(user)
+            sql_db.session.commit()
+            login_user(user, remember=True)
+        else:
+            login_user(user, remember=True)
+        if next_url and next_url.strip() != "" and next_url.strip() != "/":
+            return redirect(next_url)
+        else:
+            return redirect(url_for('dashboard'))
+        # return redirect(url_for('index'))
+        return redirect(url_for('dashboard'))
+    if alert:
+        return render_template('login.html', form=form, info = get_info(), if_alert = True, alert = alert)
+    next_url = request.args.get("next")
+    return render_template('login.html', next=next_url, form=form, info = get_info())
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+
+
+# from flask_wtf import FlaskForm
+# from wtforms import StringField, PasswordField, BooleanField, SubmitField
+# from wtforms.validators import DataRequired
 
 def get_info():
     info = {}
+    if current_user.is_authenticated:
+        info["user"] = {"email":current_user.email}
     info["form"] = SearchForm()
     info["categories"] = ["English", "History", "Math", "Science", "Languages", "Arts", "HD"]
     info["is_array"] = []
@@ -113,6 +213,10 @@ def get_info():
         if this_item["department_id"] not in info["category_is_dict"]:
             info["category_is_dict"][this_item["department_id"]] = []
         info["category_is_dict"][this_item["department_id"]].append(this_item)
+        if "user" in info and info["user"]["email"] == this_item["email"]:
+            if "independent_studies" not in info["user"]:
+                info["user"]["independent_studies"] = []
+            info["user"]["independent_studies"].append(this_item)
     return info 
 
 def get_by_id(proj_id):
@@ -120,17 +224,26 @@ def get_by_id(proj_id):
     return info["is_dict"][proj_id]
 
 @app.route('/old')
+@login_required
 def generate_independent_study_symposium():
     info = get_info()
     return render_template('old_base.html', info = info)
 
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    info = get_info()
+    return render_template('dashboard.html', info = info)
+
 @app.route('/projects/<proj_id>')
+@login_required
 def get_independent_study(proj_id):
     info = get_info()
     project = info["is_dict"][proj_id]
     return render_template('project.html', info = info, project = project)
 
 @app.route('/categories/<cat_id>')
+@login_required
 def get_independent_studies_by_category(cat_id):
     info = get_info()
     if cat_id in info["category_is_dict"]:
@@ -142,6 +255,7 @@ def get_independent_studies_by_category(cat_id):
     return render_template('index.html', info = info, category_id = cat_id, category = cat_id.replace("-"," ").title())
 
 @app.route('/search',methods=['GET','POST'])
+@login_required
 def get_independent_studies_by_search():
     if request.method=="POST":
         print("post.")
@@ -159,17 +273,26 @@ def get_independent_studies_by_search():
     return render_template('index.html', info = info, category_id = "search", category = 'Search Results for "'+query+'"')
 
 
-@app.route('/')
+@app.route('/view-all')
+@login_required
 def index():
     info = get_info()
     return render_template('index.html', info = info)
 
 @app.route('/slideshow')
+@login_required
 def slideshow():
     info = get_info()
     return render_template('carousel.html', info = info)
 
+@app.route('/agenda')
+@login_required
+def agenda():
+    info = get_info()
+    return render_template('agenda.html', info = info)
+
 @app.route('/stop')
+@login_required
 def sorry():
     info = get_info()
     return render_template('bruh.html', info = info)
