@@ -1,45 +1,101 @@
 {% extends "base.html" %}
 {% block title %}Dashboard | {% endblock %}
+{% block head %}
+<style>
+</style>
+{% endblock %}
 {% block content %}
 <div class="row">
 	<div class="row align-items-center justify-content-center" style="width:100%; text-align:center; padding-bottom:25px">
         <h1>Synchronous Independent Study Symposium Schedule</h1>
     </div>
-    <h2>Session 1 - Mandatory. See Cluster Assignments.</h2>
-    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRQ5TK4D37j0vMnPgY2-gPOzTtidQZKXACQUvDx7gtKa0PVMXJUsCzgd29Awb2lSSROU1a7V2nD5v01/pubhtml?gid=203845004&amp;single=true&amp;widget=true&amp;headers=false" frameborder=0 style="width:100%; height:500px"></iframe>
-    <h2>Session 2</h2>
-    <ul>
-        {% for this_study in info.zoom_array %}
-        <li style="padding:5px"><strong>{{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})</strong>: <a href="{{ this_study.zoom_link }}">{{ this_study.zoom_link }}</a> (see <a href="/projects/{{ this_study.id }}">here</a> for description & more)</li>
-        {% endfor %}
-    </ul>
-    <h2>Session 3</h2>
-    <div class="accordion" id="accordion">
-        {% for this_study in info.zoom_array %}
-        <div class="card">
-          <div class="card-header" id="heading-{{ this_study.id }}">
-            <h2 class="mb-0">
-              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-{{ this_study.id }}" aria-expanded="true" aria-controls="collapse-{{ this_study.id }}"><i class="fa fa-plus"></i>
-                {{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})
-              </button>
-            </h2>
-          </div>
-      
-          <div id="collapse-{{ this_study.id }}" class="collapse hide" aria-labelledby="heading-{{ this_study.id }}" data-parent="#accordion">
-            <div class="card-body">
-                {{ this_study.description }}
-                <ul class="list-unstyled">
-              <li><strong>Zoom Link: </strong><a href="{{ this_study.zoom_link }}">{{ this_study.zoom_link }}</a></li>
-              <li><strong>Project Link: </strong><a href="/projects/{{ this_study.id }}">http://independentstudy.sfuhs.org/projects/{{ this_study.id }}</a></li>
-            </ul>
+    <div class="row">
+        <ul class="list-unstyled">
+            <li><strong>1:10 - 1:20</strong> | Opening/Introduction - Remarks from Byron, an overview of the website and the symposium. <a href="https://zoom.us/j/93638710044">https://zoom.us/j/93638710044</a></li>
+            <li><strong>1:20 - 1:40</strong> | <a href="#session1">Session 1 with Clusters</a></li>
+            <li><strong>1:40 - 2:00</strong> | <a href="#session2">Session 2 with Free Choice</a></li>
+            <li><strong>2:00 - 2:20</strong> | <a href="#session3">Session 3 with Free Choice</a></li>
+        </ul>
+    </div>
+    <div class="row">
+        <h3 id="session1">Session 1 (1:20 - 1:40) - Mandatory. See Cluster Assignments.</h3>
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRQ5TK4D37j0vMnPgY2-gPOzTtidQZKXACQUvDx7gtKa0PVMXJUsCzgd29Awb2lSSROU1a7V2nD5v01/pubhtml?gid=203845004&amp;single=true&amp;headers=false" frameborder=0 style="width:100%; height:500px"></iframe>
+    </div>
+        <hr style="padding-top:10px">
+        <hr class="rgba-white-light">
+        <h3 id="session2" style="padding-bottom:10px;padding-top:10px">Session 2 (1:40 - 2:00) - Free Choice.</h3>
+        <hr class="rgba-white-light">
+        <!-- <ul>
+            {% for this_study in info.zoom_array %}
+            <li style="padding:5px"><strong>{{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})</strong>: <a href="{{ this_study.zoom_link }}">{{ this_study.zoom_link }}</a> (see <a href="/projects/{{ this_study.id }}">here</a> for description & more)</li>
+            {% endfor %}
+        </ul> -->
+    <div class="row">
+        <div class="accordion" id="s2-accordion" style="width:100%">
+            {% for this_study in info.zoom_array %}
+            {% if this_study.session_2 %}
+            <div class="card">
+            <div class="card-header" id="heading-{{ this_study.id }}">
+                <h2 id="h2-{{ this_study.id }}" class="mb-0">
+                <button class="btn btn-uhs" type="button" data-toggle="collapse" data-target="#collapse-{{ this_study.id }}" aria-expanded="true" aria-controls="collapse-{{ this_study.id }}" style="background-color: Transparent;
+                background-repeat:no-repeat;
+                border: none;
+                cursor:pointer;
+                overflow: hidden; "><i class="fa fa-plus"></i>
+                    <span>{{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})</span>
+                </button>
+                </h2>
             </div>
-          </div>
+            <div id="collapse-{{ this_study.id }}" class="collapse hide" aria-labelledby="heading-{{ this_study.id }}" data-parent="#s2-accordion">
+                <div class="card-body">
+                    {{ this_study.description }}
+                    <ul class="list-unstyled">
+                <li><strong>Zoom Link: </strong><a href="{{ this_study.zoom_link }}">{{ this_study.zoom_link }}</a></li>
+                <li><strong>Project Link: </strong><a href="/projects/{{ this_study.id }}">http://independentstudy.sfuhs.org/projects/{{ this_study.id }}</a></li>
+                </ul>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% endfor %}
         </div>
-        {% endfor %}
+    </div>
+    <hr class="hr-clearfix clearfix">
+    <div class="row">
+        <h3 id="session3" style="padding-bottom:10px;padding-top:10px">Session 3 (2:00 - 2:20) - Free Choice.</h3>
+        <div class="accordion" id="s3-accordion" style="width:100%">
+            {% for this_study in info.zoom_array %}
+            {% if this_study.session_3 %}
+            <div class="card">
+            <div class="card-header" id="heading-{{ this_study.id }}">
+                <h2 id="h2-{{ this_study.id }}" class="mb-0">
+                <button class="btn btn-uhs" type="button" data-toggle="collapse" data-target="#collapse-{{ this_study.id }}" aria-expanded="true" aria-controls="collapse-{{ this_study.id }}" style="background-color: Transparent;
+                background-repeat:no-repeat;
+                border: none;
+                cursor:pointer;
+                overflow: hidden; "><i class="fa fa-plus"></i>
+                    <span>{{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})</span>
+                </button>
+                </h2>
+            </div>
+            <div id="collapse-{{ this_study.id }}" class="collapse hide" aria-labelledby="heading-{{ this_study.id }}" data-parent="#s3-accordion">
+                <div class="card-body">
+                    {{ this_study.description }}
+                    <ul class="list-unstyled">
+                <li><strong>Zoom Link: </strong><a href="{{ this_study.zoom_link }}">{{ this_study.zoom_link }}</a></li>
+                <li><strong>Project Link: </strong><a href="/projects/{{ this_study.id }}">http://independentstudy.sfuhs.org/projects/{{ this_study.id }}</a></li>
+                </ul>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}
 {% block js %}
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script>
     // $(document).ready(function(){
     //     // Add minus icon for collapse element which is open by default
@@ -62,10 +118,13 @@
         
         // Toggle plus minus icon on show hide of collapse element
         $(".collapse").on('show.bs.collapse', function(){
-            console.log("here")
-        	$(this).prev(".card-header").find(".fa").removeClass("fa-plus").addClass("fa-minus");
+            var text = $(this).prev().children('h2').children('.btn').text()
+        	$(this).prev().children('h2').children('.btn').html('<i class="fa fa-minus"></i><span>'+text+"</span>");
+            $(this).prev().children('h2').children('.btn').css("color","#ab192d");
         }).on('hide.bs.collapse', function(){
-        	$(this).prev(".card-header").find(".fa").removeClass("fa-minus").addClass("fa-plus");
+        	var text = $(this).prev().children('h2').children('.btn').text()
+        	$(this).prev().children('h2').children('.btn').html('<i class="fa fa-plus"></i><span>'+text+"</span>");
+            $(this).prev().children('h2').children('.btn').css("color","#000");
         });
     });
 </script>
