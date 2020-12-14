@@ -211,7 +211,10 @@ def get_info():
         if "folder" in this_item["link"]:
             this_item["link"] = "https://drive.google.com/embeddedfolderview?id="+this_item["link"].split("/folders/")[1].split("?")[0]+"#grid"
         if "/pub" in this_item["link"]:
-            this_item["link"] = this_item["link"].split("/pub")[0]+"/embed?start=true&loop=true&delayms=3000"
+            if "presentation" in this_item["link"]:
+                this_item["link"] = this_item["link"].split("/pub")[0]+"/embed?start=true&loop=true&delayms=3000"
+            elif "document" in this_item["link"]:
+                this_item["link"] = this_item["link"] + "?embedded=true"
         if this_item["link_2"] == "":
             this_item["link_2"] = None
         if this_item["david"] == "":
