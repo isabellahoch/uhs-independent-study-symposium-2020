@@ -127,6 +127,8 @@ def logout():
 # from wtforms import StringField, PasswordField, BooleanField, SubmitField
 # from wtforms.validators import DataRequired
 
+import random
+
 def get_info():
     info = {}
     if current_user.is_authenticated:
@@ -233,6 +235,7 @@ def get_info():
         if this_item["zoom_link"] != "":
             info["zoom_array"].append(this_item)
         info["category_is_dict"][this_item["department_id"]].append(this_item)
+        random.shuffle(info["category_is_dict"][this_item["department_id"]]) 
         if "user" in info:
             if info["user"]["email"] == this_item["email"]:
                 if "independent_studies" not in info["user"]:
@@ -242,6 +245,8 @@ def get_info():
                 if "sponsor_studies" not in info["user"]:
                     info["user"]["sponsor_studies"] = []
                 info["user"]["sponsor_studies"].append(this_item)
+    random.shuffle(info["is_array"])   
+    random.shuffle(info["zoom_array"])    
     return info 
 
 def get_truncated_info():
