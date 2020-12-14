@@ -143,7 +143,7 @@ def get_info():
     all_info.pop(0)
     all_info.pop(0)
     for item in all_info:			
-        this_item = {"timestamp":item[0], "email":item[1], "name":item[2], "graduation_year":item[3], "sponsor":item[4], "department":item[5], "title":item[6], "description":item[7], "link":item[8], "cover_photo":item[9], "profile_photo":item[10], "zoom_link":item[11], "proj_type":item[12], "sharing_confirmation":item[13], "if_synchronous":item[14], "additional_comments":item[15], "random":item[16], "group_names":item[17], "random_2":item[18], "link_2":item[19], "if_slideshow":item[20], "id":item[21], "new_link":item[22], "david":item[23], "session_1":item[24], "session_2":item[25], "session_3":item[26]}
+        this_item = {"timestamp":item[0], "email":item[1], "name":item[2], "graduation_year":item[3], "sponsor":item[4], "department":item[5], "title":item[6], "description":item[7], "link":item[8], "cover_photo":item[9], "profile_photo":item[10], "zoom_link":item[11], "proj_type":item[12], "sharing_confirmation":item[13], "if_synchronous":item[14], "additional_comments":item[15], "random":item[16], "group_names":item[17], "random_2":item[18], "link_2":item[19], "if_slideshow":item[20], "id":item[21], "new_link":item[22], "david":item[23], "session_1":item[24], "session_2":item[25], "session_3":item[26], "sponsor_email":item[27]}
         this_item["index"] = all_info.index(item)
         if "," in this_item["name"]:
             this_item["names"] = this_item["name"].split(", ")
@@ -230,10 +230,15 @@ def get_info():
         if this_item["zoom_link"] != "":
             info["zoom_array"].append(this_item)
         info["category_is_dict"][this_item["department_id"]].append(this_item)
-        if "user" in info and info["user"]["email"] == this_item["email"]:
-            if "independent_studies" not in info["user"]:
-                info["user"]["independent_studies"] = []
-            info["user"]["independent_studies"].append(this_item)
+        if "user" in info:
+            if info["user"]["email"] == this_item["email"]:
+                if "independent_studies" not in info["user"]:
+                    info["user"]["independent_studies"] = []
+                info["user"]["independent_studies"].append(this_item)
+            elif info["user"]["email"] == this_item["sponsor_email"] or info["user"]["email"] in this_item["sponsor_email"].split(", "):
+                if "sponsor_studies" not in info["user"]:
+                    info["user"]["sponsor_studies"] = []
+                info["user"]["sponsor_studies"].append(this_item)
     return info 
 
 def get_truncated_info():

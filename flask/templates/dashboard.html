@@ -17,6 +17,17 @@
             {% endfor %}
         </ul>
     </div>
+    {% elif info.user.sponsor_studies %}
+    <hr>
+    <div class="row">
+        <h2>Thank you for sponsoring {% if info.user.sponsor_studies|length==1 %}an independent study{% else %}{{ info.user.sponsor_studies|length }} independent studies{% endif %} in this year's Independent Study Symposium!</h2>
+        <p>You can view the independent stud{% if info.user.sponsor_studies|length==1 %}y{% else %}ies{% endif %} you sponsored below. Please let Isabella '21 (<a href="mailto:isabella.hochschi_21@sfuhs.org">isabella.hochschi_21@sfuhs.org</a>), David '21 (<a href="mailto:david.wignall_21@sfuhs.org">david.wignall_21@sfuhs.org</a>), & Evan '21 (<a href="mailto:evancarlo.fowler_21@sfuhs.org">evancarlo.fowler_21@sfuhs.org</a>) know if you have any questions or concerns about how {% if info.user.sponsor_studies|length==1 %}it is{% else %}they are{% endif %} formatted. And please use the menu above to check out some of the incredible work UHS students did this semester!</p>
+        <ul>
+            {% for this_study in info.user.sponsor_studies %}
+            <li><h5><a href="/projects/{{ this_study.id }}">{{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})</a></h5></li>
+            {% endfor %}
+        </ul>
+    </div>
     {% else %}
     <div class="row">
         <h2>Thank you for visiting the Independent Study Symposium website!</h2>
