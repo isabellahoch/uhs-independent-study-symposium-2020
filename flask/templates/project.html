@@ -29,14 +29,18 @@ border-style:solid;">
         <p style="padding:5%">{{ project.description }}</p>
     </div>
     {% if project.david %}
-    <div class="row">
-        {{ david|safe }}
-    </div>
+        <div class="row">
+            {{ david|safe }}
+        </div>
     {% else %}
-    <iframe src="{{project.link}}" style="width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999; height:1000px" frameborder=0>
-        ></iframe>
-        {% if project.link_2 %}<iframe src="{{project.link_2}}" style="width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999; height:1000px" frameborder=0>
-            ></iframe>{% endif %}
-            {% endif %}
+        {% if project.link %}
+            <iframe src="{{project.link}}" style="width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999; height:1000px" frameborder=0>
+                ></iframe>
+        {% endif %}
+        {% if project.link_2 %}
+            <iframe src="{{project.link_2}}" style="width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999; height:1000px" frameborder=0>
+                    ></iframe>
+        {% endif %}
+    {% endif %}
 </div>
 {% endblock %}
