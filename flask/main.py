@@ -266,6 +266,7 @@ def generate_independent_study_symposium():
 @login_required
 def dashboard():
     info = get_info()
+    info["alert"] = True
     return render_template('dashboard.html', info = info)
 
 @app.route('/schedule')
