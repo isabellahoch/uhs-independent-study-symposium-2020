@@ -30,7 +30,7 @@ border-style:solid;">
     </div>
     {% if project.david %}
         <div class="row">
-            {{ david|safe }}
+            {{ project.david|safe }}
         </div>
     {% else %}
         {% if project.link %}
