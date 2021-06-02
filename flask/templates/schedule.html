@@ -43,7 +43,7 @@
                 border: none;
                 cursor:pointer;
                 overflow: hidden; "><i class="fa fa-plus"></i>
-                    <span>{{ this_study.title }} ({{ this_study.name }} '{{ this_study.graduation_year }})</span>
+                    <span>{{ this_study.title }} ({% if this_study.group_names %}{{ this_study.group_names }}{% else %}{{ this_study.name }} '{{ this_study.graduation_year }}{% endif %})</span>
                 </button>
                 </h2>
             </div>
