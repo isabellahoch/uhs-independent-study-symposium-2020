@@ -24,7 +24,7 @@ border-style:solid;">
         <div class="row text-center" style="width:100%">
 
             <h1>{{ project.title }}</h1>
-            <h4>{{ project.name }} (sponsored by {{ project.sponsor }})</h4>
+            <h4>{% if project.group_names %}{{ project.group_names }}{% else %}{{ project.name }}{% endif %} (sponsored by {{ project.sponsor }})</h4>
         </div>
         <p style="padding:5%">{{ project.description|safe }}</p>
     </div>

@@ -145,7 +145,7 @@ def get_info():
     all_info.pop(0)
     all_info.pop(0)
     for item in all_info:			
-        this_item = {"timestamp":item[0], "email":item[1], "name":item[2],"graduation_year":item[3], "group_names":item[4],"sponsor":item[5], "department":item[6], "title":item[7], "description":item[8], "link":item[10], "cover_photo":item[13], "profile_photo":item[14], "zoom_link":item[16], "link_2":item[12], "sharing_confirmation":item[13], "if_synchronous":item[15], "additional_comments":item[15], "random":item[16], "group_names":"", "random_2":item[18], "link_2":item[19], "if_slideshow":item[20], "id":item[21], "new_link":item[22], "david":item[23], "session_1":item[24], "session_2":item[25], "session_3":item[26], "sponsor_email":item[27]}
+        this_item = {"timestamp":item[0], "email":item[1], "name":item[2],"graduation_year":item[3], "group_names":item[4],"sponsor":item[5], "department":item[6], "title":item[7], "description":item[8], "link":item[10], "cover_photo":item[13], "profile_photo":item[14], "zoom_link":item[16], "link_2":item[12], "sharing_confirmation":item[13], "if_synchronous":item[15], "additional_comments":item[15], "random":item[16], "random_2":item[18], "link_2":item[19], "if_slideshow":item[20], "id":item[21], "new_link":item[22], "david":item[23], "session_1":item[24], "session_2":item[25], "session_3":item[26], "sponsor_email":item[27]}
         this_item["index"] = all_info.index(item)
         print(this_item['name'])
         if this_item["title"]:
@@ -206,10 +206,13 @@ def get_info():
                 this_item["profile_photo"] = "https://drive.google.com/uc?export=view&id="+this_item["profile_photo"].split("?id=")[1]
             # if "presentation" in this_item["link"]:
             #     this_item["embed_link"] = '<iframe src="https://drive.google.com/embeddedfolderview?id='+this_item["link"].split("/folders/")[1].split("?")[0]+'/#grid" frameborder="0" width="1440" height="839" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>'
+            print("group names:")
+            print(this_item["group_names"])
             if this_item["new_link"] != "":
                 this_item["link"] = this_item["new_link"]
             if this_item["group_names"] != "":
-                this_item["name"] = this_item["group_names"]
+                # this_item["name"] = this_item["group_names"]
+                print(this_item["group_names"])
             else:
                 this_item["group_names"] = None
             if "folder" in this_item["link"]:
