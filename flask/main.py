@@ -225,6 +225,8 @@ def get_info():
                 this_item["david"] = None
             if "/view" in this_item["link"]:
                 this_item["link"] = this_item["link"].replace("view","preview")
+            if this_item["link"] == "":
+                this_item["link"] = None
             if this_item["cover_photo"] == "":
                 this_item["cover_photo"] = "https://via.placeholder.com/150?text="+this_item["title"]+" ("+this_item["name"]+")"
             info["is_array"].append(this_item)
