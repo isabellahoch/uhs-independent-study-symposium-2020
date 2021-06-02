@@ -222,6 +222,10 @@ def get_info():
                     this_item["link"] = this_item["link"].split("/pub")[0]+"/embed?start=true&loop=true&delayms=10000"
                 elif "document" in this_item["link"]:
                     this_item["link"] = this_item["link"] + "?embedded=true"
+            if "prezi" in this_item["link"]:
+                this_item["prezi"] = True
+            else:
+                this_item["prezi"] = False
             if this_item["link_2"] == "":
                 this_item["link_2"] = None
             if this_item["david"] == "":

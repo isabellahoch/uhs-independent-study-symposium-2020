@@ -32,6 +32,8 @@ border-style:solid;">
         <div class="row">
             {{ project.david|safe }}
         </div>
+    {% elif project.prezi %}
+    <h3><a href="{{ project.link }}"><i class="fas fa-external-link-alt"></i> {{ project.link }}</a></h3>
     {% else %}
         {% if project.link %}
         <h3><a href="{{ project.link }}"><i class="fas fa-external-link-alt"></i> {{ project.link }}</a></h3>
