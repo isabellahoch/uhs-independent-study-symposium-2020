@@ -219,10 +219,10 @@ def get_info():
                 this_item["link"] = "https://drive.google.com/embeddedfolderview?id="+this_item["link"].split("/folders/")[1].split("?")[0]+"#grid"
             if "/pub" in this_item["link"]:
                 if "presentation" in this_item["link"]:
-                    this_item["link"] = this_item["link"].split("/pub")[0]+"/embed?start=true&loop=true&delayms=10000"
+                    this_item["link"] = this_item["link"].split("/pub")[0]+"/embed?start=true&loop=true&delayms=8000"
                 elif "document" in this_item["link"]:
                     this_item["link"] = this_item["link"] + "?embedded=true"
-            if "prezi" in this_item["link"]:
+            if "prezi" in this_item["link"] or "soundcloud" in this_item["link"]:
                 this_item["prezi"] = True
             else:
                 this_item["prezi"] = False
